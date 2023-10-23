@@ -15,6 +15,7 @@ data:
   DNS1: 127.0.0.1#5335
   VIRTUAL_HOST: #The virtual host for Pi-hole (e.g., pi-hole.example.com).
   QUERY_LOGGING: "false"
+  DNSMASQ_LISTENING: local
   FTLCONF_PRIVACYLEVEL: "3"
   FTLCONF_DBIMPORT: "no"
   FTLCONF_MAXDBDAYS: "7"
