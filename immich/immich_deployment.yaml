@@ -44,11 +44,10 @@ spec:
           envFrom:
             - configMapRef:
                 name: immich-generic-configmap
+            - configMapRef:
+                name: immich-server-configmap
             - secretRef:
                 name: immich-generic-secrets
-          env:
-            - name: IMMICH_PORT
-              value: "3001"
           volumeMounts:
             - name: upload
               mountPath: "/usr/src/app/upload"
@@ -64,11 +63,10 @@ spec:
           envFrom:
             - configMapRef:
                 name: immich-generic-configmap
+            - configMapRef:
+                name: immich-machine-learning-configmap
             - secretRef:
                 name: immich-generic-secrets
-          env:
-            - name: IMMICH_PORT
-              value: "3003"
           volumeMounts:
             - name: cache
               mountPath: "/cache"

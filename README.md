@@ -1,4 +1,4 @@
-#YAML example charts of my Kubernetes homelab projects
+# YAML example charts of my Kubernetes homelab projects
 This repository contains example YAML charts for a selection of my personal homelab applications. 
 
 Note:These templates are specifically designed for *non-production environments* and/or tailored for my personal local homelab setup!

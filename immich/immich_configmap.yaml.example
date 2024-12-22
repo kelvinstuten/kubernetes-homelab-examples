@@ -13,3 +13,21 @@ data:
   DB_DATABASE_NAME: immich
   POSTGRES_DB: immich
   POSTGRES_USER: {YOUR_DATABASE_USERNAME}
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: immich-server-configmap
+  namespace: immich
+data:
+  IMMICH_PORT: "3001"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: immich-machine-learning-configmap
+  namespace: immich
+data:
+  IMMICH_PORT: "3003"
