@@ -1,4 +1,0 @@
-.gitignore
-_deprecated
-*_secret.yaml
-*_configmap.yaml
