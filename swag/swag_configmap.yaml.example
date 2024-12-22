@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: swag
+  name: swag-generic-configmap
   namespace: swag
 data:
   TZ: "Europe/Amsterdam"
