@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: open-webui
+  name: open-webui
+  namespace: open-webui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: open-webui
+
+  template:
+    metadata:
+      labels:
+        app: open-webui
+    spec:
+      hostname: open-webui
+      volumes:
+        - name: open-webui
+          hostPath:
+            path: /mnt/data/open-webui/data
+            type: Directory
+        - name: ollama
+          hostPath:
+            path: /mnt/datahdd/open-webui/ollama
+            type: Directory
+      restartPolicy: Always
+      runtimeClassName: nvidia # Enable GPU
+      containers:
+        - name: open-webui
+          image: ghcr.io/open-webui/open-webui:main
+          imagePullPolicy: Always
+          tty: true
+          envFrom:
+            - configMapRef:
+                name: open-webui-generic-configmap
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: open-webui
+              mountPath: "/app/backend/data"
+          resources: {}
+        - name: ollama
+          image: ollama/ollama:latest
+          imagePullPolicy: Always
+          tty: true
+          ports:
+            - containerPort: 11434
+          volumeMounts:
+            - name: ollama
+              mountPath: /root/.ollama
+          resources:
+            limits:
+              memory: "4Gi"

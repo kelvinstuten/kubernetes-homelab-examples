@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homebridge-generic-configmap
+  namespace: homebridge
+data:
+  TZ: "Europe/Amsterdam"

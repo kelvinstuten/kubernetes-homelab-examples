@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: immich-generic-configmap
+  namespace: immich
+data:
+  NODE_ENV: production
+  IMMICH_SERVER_URL: http://immich.localhost:3001
+  IMMICH_MACHINE_LEARNING_URL: http://immich.localhost:3003
+  REDIS_HOSTNAME: immich.localhost
+  DB_HOSTNAME: immich.localhost
+  DB_USERNAME: {YOUR_DATABASE_USERNAME}
+  DB_DATABASE_NAME: immich
+  POSTGRES_DB: immich
+  POSTGRES_USER: {YOUR_DATABASE_USERNAME}

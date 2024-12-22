@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: swag
+  namespace: swag
+data:
+  TZ: "Europe/Amsterdam"
+  PUID: "1000"
+  PGID: "1000"
+  URL: {YOURDOMAIN.com}
+  SUBDOMAINS: "wildcard"
+  VALIDATION: "dns"
+  DNSPLUGIN: "cloudflare"
+  EMAIL: {YOUREMAIL@email.com}

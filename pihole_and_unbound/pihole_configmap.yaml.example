@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pihole-generic-configmap
+  namespace: pihole
+data:
+  TZ: Europe/Amsterdam
+  DNS1: 127.0.0.1#5335
+  VIRTUAL_HOST: {pihole.YOUR_WEBSITE.com}
+  QUERY_LOGGING: "false"
+  DNSMASQ_LISTENING: local
+  FTLCONF_PRIVACYLEVEL: "3"
+  FTLCONF_DBIMPORT: "no"
+  FTLCONF_MAXDBDAYS: "7"
+  FTLCONF_DBINTERVAL: "60"

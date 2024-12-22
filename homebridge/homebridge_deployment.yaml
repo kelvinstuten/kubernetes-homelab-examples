@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: homebridge
+  name: homebridge
+  namespace: homebridge
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: homebridge
+  template:
+    metadata:
+      labels:
+        app: homebridge
+    spec:
+      hostname: homebridge
+      hostNetwork: true
+      volumes:
+        - name: homebridge
+          hostPath:
+            path: /mnt/data/homebridge/
+            type: Directory
+      containers:
+        - image: oznu/homebridge:latest
+          name: homebridge
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: homebridge-generic-configmap
+          ports:
+            - containerPort: 8581
+            - containerPort: 51846
+            - containerPort: 5353
+            - containerPort: 48000
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: homebridge
+              mountPath: "/homebridge"
+          resources: {}

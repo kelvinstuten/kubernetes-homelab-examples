@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: swag
+  name: swag
+  namespace: swag
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: swag
+  template:
+    metadata:
+      labels:
+        app: swag
+    spec:
+      hostname: swag
+      volumes:
+      - name: config
+        hostPath:
+          path: /mnt/data/swag
+          type: DirectoryOrCreate
+      containers:
+      - image: linuxserver/swag:latest
+        name: swag
+        envFrom:
+        - configMapRef:
+          name: swag-generic-configmap
+        ports:
+        - containerPort: 443
+        - containerPort: 8443
+        volumeMounts:
+        - name: config
+          mountPath: "/config"
+        resources: {}

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: wallos
+  name: wallos
+  namespace: wallos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wallos
+  template:
+    metadata:
+      labels:
+        app: wallos
+    spec:
+      hostname: wallos
+      volumes:
+        - name: wallos-database
+          hostPath:
+            path: /mnt/data/wallos/database
+        - name: wallos-logos
+          hostPath:
+            path: /mnt/data/wallos/logos
+      restartPolicy: Always
+      containers:
+        - image: bellamy/wallos:latest
+          name: wallos
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: wallos-database
+              mountPath: /var/www/html/db
+            - name: wallos-logos
+              mountPath: /var/www/html/images/uploads/logos
+          resources: {}

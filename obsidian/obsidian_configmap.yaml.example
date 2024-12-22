@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: obsidian-generic-configmap
+  namespace: obsidian
+data:
+  COUCHDB_USER: {YOUR_DATABASE_USERNAME}

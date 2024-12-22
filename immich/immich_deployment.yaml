@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: immich
+  name: immich
+  namespace: immich
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: immich
+  template:
+    metadata:
+      labels:
+        app: immich
+    spec:
+      hostAliases:
+        - ip: "127.0.0.1"
+          hostnames:
+            - "immich.localhost"
+      volumes:
+        - name: upload
+          hostPath:
+            path: /mnt/datahdd/backups/immich
+            type: Directory
+        - name: externalphotos
+          hostPath:
+            path: /mnt/datahdd/backups/afbeeldingen
+            type: Directory
+        - name: database
+          hostPath:
+            path: /mnt/data/immich/database/
+            type: Directory
+        - name: cache
+          hostPath:
+            path: /mnt/data/immich/cache
+            type: Directory
+      runtimeClassName: nvidia
+      containers:
+        - image: ghcr.io/immich-app/immich-server:release
+          name: immich-server
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: immich-generic-configmap
+            - secretRef:
+                name: immich-generic-secrets
+          env:
+            - name: IMMICH_PORT
+              value: "3001"
+          volumeMounts:
+            - name: upload
+              mountPath: "/usr/src/app/upload"
+            - name: externalphotos
+              mountPath: "/mnt/media/external/afbeeldingen"
+              readOnly: true
+          ports:
+            - containerPort: 3001
+          resources: {}
+        - image: ghcr.io/immich-app/immich-machine-learning:release-cuda
+          name: immich-machinelearning
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: immich-generic-configmap
+            - secretRef:
+                name: immich-generic-secrets
+          env:
+            - name: IMMICH_PORT
+              value: "3003"
+          volumeMounts:
+            - name: cache
+              mountPath: "/cache"
+          ports:
+            - containerPort: 3003
+          resources: {}
+        - image: tensorchord/pgvecto-rs:pg14-v0.2.0
+          name: immich-postgres
+          envFrom:
+            - configMapRef:
+                name: immich-generic-configmap
+            - secretRef:
+                name: immich-generic-secrets
+          volumeMounts:
+            - name: database
+              mountPath: "/var/lib/postgresql/data"
+          ports:
+            - containerPort: 5432
+          resources: {}
+        - image: redis:6.2-alpine
+          name: immich-redis
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 6379
+          resources: {}

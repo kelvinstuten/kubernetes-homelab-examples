@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pihole
+  namespace: pihole
+spec:
+  type: NodePort
+  externalTrafficPolicy: Local
+  selector:
+    app: pihole
+  ports:
+    - name: port-53-tcp
+      protocol: TCP
+      port: 53
+      targetPort: 53
+    - name: port-53-udp
+      protocol: UDP
+      port: 53
+      targetPort: 53
+    - name: port-67-udp
+      protocol: UDP
+      port: 67
+      targetPort: 67
+    - name: port-80-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 80

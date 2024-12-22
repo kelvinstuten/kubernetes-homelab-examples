@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: obsidian
+  namespace: obsidian
+spec:
+  type: NodePort
+  externalTrafficPolicy: Local
+  selector:
+    app: obsidian
+  ports:
+    - name: "port-5984"
+      port: 59840
+      targetPort: 5984

@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: syncthing
+  name: syncthing
+  namespace: syncthing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: syncthing
+  template:
+    metadata:
+      labels:
+        app: syncthing
+    spec:
+      hostname: syncthing
+      volumes:
+        - name: config
+          hostPath:
+            path: /mnt/data/syncthing
+            type: Directory
+        - name: data
+          hostPath:
+            path: /mnt/datahdd/
+            type: Directory
+      containers:
+        - image: syncthing/syncthing:latest
+          name: syncthing
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8384
+            - containerPort: 22000
+            - containerPort: 21027
+          volumeMounts:
+            - name: config
+              mountPath: "/var/syncthing/config"
+            - name: data
+              mountPath: "/data"
+          resources: {}

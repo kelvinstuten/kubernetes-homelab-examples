@@ -1,22 +1,28 @@
-#YAML example chart for a Kubernetes homelab
-This repository contains YAML example charts for a selection of applications, making it easier to deploy these services using Kubernetes. Each application chart includes configurations and settings tailored for seamless integration into your Homelab Kubernetes cluster.
+#YAML example charts of my Kubernetes homelab projects
+This repository contains example YAML charts for a selection of my personal homelab applications. 
 
-The goal is to add charts for all of the applications listed below:
+Note:These templates are specifically designed for *non-production environments* and/or tailored for my personal local homelab setup!
+For public and production environments, the templates need to be updated to be secure and up to date.
 
-- [x] pihole
-- [ ] swag
-- [ ] homebridge
+The goal is to add charts for all of the applications listed below hosted in my homelab setup:
+
+- [x] pihole + unbound
+- [x] openweb-ui
+- [x] swag
+- [x] homebridge
+- [x] obsidian
+- [x] p1monitor
+- [x] wireguard
+- [x] immich
+- [x] syncthing
+- [x] wallos
 - [ ] languagetool
 - [ ] libregrammar
-- [ ] p1monitor
 - [ ] planka
-- [ ] wireguard
 - [ ] devops-agents
-- [ ] immich
 - [ ] joplin
 - [ ] photoview
 - [ ] plex
-- [ ] syncthing
 - [ ] vscode
 - [ ] affine
 - [ ] fireflyiii

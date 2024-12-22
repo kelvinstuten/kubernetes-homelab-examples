@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: obsidian
+  name: obsidian
+  namespace: obsidian
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: obsidian
+
+  template:
+    metadata:
+      labels:
+        app: obsidian
+    spec:
+      volumes:
+        - name: couchdb-data
+          hostPath:
+            path: /mnt/data/obsidian/database/data
+            type: Directory
+        - name: couchdb-config
+          hostPath:
+            path: /mnt/data/obsidian/database/config
+            type: Directory
+      containers:
+        - image: couchdb:latest
+          name: obsidian-couchdb
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: obsidian-generic-configmap
+            - secretRef:
+                name: obsidian-generic-secrets
+          volumeMounts:
+            - name: couchdb-data
+              mountPath: /opt/couchdb/data
+            - name: couchdb-config
+              mountPath: /opt/couchdb/etc/local.d
+          ports:
+            - containerPort: 5984
+          resources: {}

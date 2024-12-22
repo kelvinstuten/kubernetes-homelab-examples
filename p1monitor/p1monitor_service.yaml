@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: p1monitor
+  namespace: p1monitor
+spec:
+  type: NodePort
+  externalTrafficPolicy: Local
+  selector:
+    app: p1monitor
+  ports:
+    - name: "80"
+      port: 8989
+      targetPort: 80

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: swag
+  namespace: swag
+spec:
+  type: NodePort
+  externalTrafficPolicy: Local
+  selector:
+    app: swag
+  ports:
+    - name: "port-443-internal"
+      port: 443
+      targetPort: 443
+    - name: "port-8443-external"
+      port: 8443
+      targetPort: 8443
