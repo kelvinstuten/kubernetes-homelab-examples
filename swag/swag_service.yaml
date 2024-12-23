@@ -5,7 +5,9 @@ metadata:
   namespace: swag
 spec:
   type: NodePort
-  externalTrafficPolicy: Local
+  externalIPs:
+  - 192.168.0.100
+  - 192.168.0.101
   selector:
     app: swag
   ports:
