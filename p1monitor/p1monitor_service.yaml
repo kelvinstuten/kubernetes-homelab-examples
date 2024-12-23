@@ -4,10 +4,7 @@ metadata:
   name: p1monitor
   namespace: p1monitor
 spec:
-  type: NodePort
-  externalIPs:
-  - 192.168.0.100
-  - 192.168.0.101
+  type: LoadBalancer
   selector:
     app: p1monitor
   ports:

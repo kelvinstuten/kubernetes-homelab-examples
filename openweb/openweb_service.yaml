@@ -4,10 +4,7 @@ metadata:
   name: open-webui
   namespace: open-webui
 spec:
-  type: NodePort
-  externalIPs:
-  - 192.168.0.100
-  - 192.168.0.101
+  type: LoadBalancer
   selector:
     app: open-webui
   ports:

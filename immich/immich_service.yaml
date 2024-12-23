@@ -4,10 +4,7 @@ metadata:
   name: immich
   namespace: immich
 spec:
-  type: NodePort
-  externalIPs:
-  - 192.168.0.100
-  - 192.168.0.101
+  type: LoadBalancer
   selector:
     app: immich
   ports:
