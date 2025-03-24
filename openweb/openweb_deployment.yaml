@@ -51,6 +51,7 @@ spec:
           volumeMounts:
             - name: ollama
               mountPath: /root/.ollama
-          resources:
-            limits:
-              memory: "4Gi"
+          resources: {}
+          # resources:
+          #   limits:
+          #     memory: "4Gi"
