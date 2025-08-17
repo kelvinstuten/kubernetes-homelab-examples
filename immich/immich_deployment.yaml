@@ -73,7 +73,7 @@ spec:
           ports:
             - containerPort: 3003
           resources: {}
-        - image: tensorchord/pgvecto-rs:pg14-v0.2.0
+        - image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0
           name: immich-postgres
           envFrom:
             - configMapRef:
