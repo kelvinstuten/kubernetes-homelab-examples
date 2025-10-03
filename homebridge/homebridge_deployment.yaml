@@ -23,7 +23,7 @@ spec:
             path: /mnt/data/homebridge/
             type: Directory
       containers:
-        - image: oznu/homebridge:latest
+        - image: homebridge/homebridge:latest
           name: homebridge
           imagePullPolicy: Always
           envFrom:
