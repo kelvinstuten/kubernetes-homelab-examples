@@ -1,0 +1,98 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: openarchiver
+  name: openarchiver
+  namespace: openarchiver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: openarchiver
+  template:
+    metadata:
+      labels:
+        app: openarchiver
+    spec:
+      volumes:
+        - name: storage-data
+          hostPath:
+            path: /mnt/datahdd/openarchiver/data
+            type: Directory
+        - name: postgres-data
+          hostPath:
+            path: /mnt/data/openarchiver/postgres
+            type: Directory
+        - name: valkey-data
+          hostPath:
+            path: /mnt/data/openarchiver/valkey
+            type: Directory
+        - name: meilisearch-data
+          hostPath:
+            path: /mnt/data/openarchiver/meilisearch
+            type: Directory
+      containers:
+        - name: openarchiver
+          image: logiclabshq/open-archiver:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: openarchiver-generic-configmap
+            - secretRef:
+                name: openarchiver-generic-secrets
+          volumeMounts:
+            - name: storage-data
+              mountPath: /var/data/openarchiver
+          resources: {}
+        - name: postgres
+          image: postgres:17-alpine
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: openarchiver-generic-configmap
+            - secretRef:
+                name: openarchiver-generic-secrets
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+          resources: {}
+        - name: valkey
+          image: valkey/valkey:8-alpine
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 6379
+          command: ["valkey-server", "--requirepass", "$(REDIS_PASSWORD)"]
+          envFrom:
+            - configMapRef:
+                name: openarchiver-generic-configmap
+            - secretRef:
+                name: openarchiver-generic-secrets
+          volumeMounts:
+            - name: valkey-data
+              mountPath: /data
+          resources: {}
+        - name: meilisearch
+          image: getmeili/meilisearch:v1.15
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 7700
+          envFrom:
+            - configMapRef:
+                name: openarchiver-generic-configmap
+            - secretRef:
+                name: openarchiver-generic-secrets
+          volumeMounts:
+            - name: meilisearch-data
+              mountPath: /meili_data
+          resources: {}
+        - name: tika
+          image: apache/tika:3.2.2.0-full
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9998
+          resources: {}

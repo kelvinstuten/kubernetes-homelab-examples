@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: openarchiver
+  namespace: openarchiver
+spec:
+  type: LoadBalancer
+  selector:
+    app: openarchiver
+  ports:
+    - name: "port-3000"
+      port: 31131
+      targetPort: 3000

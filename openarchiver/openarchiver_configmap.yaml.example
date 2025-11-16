@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: openarchiver-generic-configmap
+  namespace: openarchiver
+data:
+  NODE_ENV: production
+  PORT_BACKEND: "4000"
+  PORT_FRONTEND: "3000"
+  APP_URL: http://localhost:3000
+  ORIGIN: $APP_URL
+  SYNC_FREQUENCY: '* * * * *' 
+  ALL_INCLUSIVE_ARCHIVE: "false"
+  POSTGRES_DB: openarchiver
+  POSTGRES_USER: admin
+  MEILI_HOST: http://localhost:7700
+  MEILI_INDEXING_BATCH: "500"
+  REDIS_HOST: valkey
+  REDIS_PORT: "6379"
+  REDIS_TLS_ENABLED: "false"
+  STORAGE_TYPE: local
+  BODY_SIZE_LIMIT: 100M
+  STORAGE_LOCAL_ROOT_PATH: /var/data/openarchiver
+  ENABLE_DELETION: "false"
+  RATE_LIMIT_WINDOW_MS: "60000"
+  RATE_LIMIT_MAX_REQUESTS: "100"
+  JWT_EXPIRES_IN: "365d"
+  TIKA_URL: http://localhost:9998
