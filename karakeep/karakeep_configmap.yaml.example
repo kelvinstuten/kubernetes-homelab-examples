@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: karakeep-generic-configmap
+  namespace: karakeep
+data:
+  EXAMPLE: EXAMPLE 

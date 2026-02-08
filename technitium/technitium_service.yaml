@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: technitium
+  namespace: technitium
+spec:
+  type: NodePort
+  externalIPs:
+  - 192.168.0.100
+  - 192.168.0.101
+  # externalTrafficPolicy: Local
+  selector:
+    app: technitium
+  ports:
+    - name: port-5380-tcp
+      protocol: TCP
+      port: 5380
+      targetPort: 5380
+    - name: port-53-tcp
+      protocol: TCP
+      port: 53
+      targetPort: 53
+    - name: port-53-udp
+      protocol: UDP
+      port: 53
+      targetPort: 53
+    - name: port-853-tcp
+      protocol: TCP
+      port: 853
+      targetPort: 853
+    - name: port-853-udp
+      protocol: UDP
+      port: 853
+      targetPort: 853
+    - name: port-8053-tcp
+      protocol: TCP
+      port: 8053
+      targetPort: 8053

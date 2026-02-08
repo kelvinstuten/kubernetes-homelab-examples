@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: zerobyte-generic-configmap
+  namespace: zerobyte
+data:
+  TZ: Europe/Amsterdam
+  BASE_URL: https://youdomain.com

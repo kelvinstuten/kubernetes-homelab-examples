@@ -5,6 +5,7 @@ metadata:
   namespace: swag
 spec:
   type: LoadBalancer
+  externalTrafficPolicy: Local
   selector:
     app: swag
   ports:
@@ -14,3 +15,6 @@ spec:
     - name: "port-8443-external"
       port: 8443
       targetPort: 8443
+    # - name: "port-81-dashboard"
+    #   port: 81
+    #   targetPort: 81

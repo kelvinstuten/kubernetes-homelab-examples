@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: syncthing-generic-configmap
+  namespace: syncthing
+data:
+  PUID: "1000"
+  PGID: "1000"

@@ -30,6 +30,10 @@ spec:
           ports:
             - containerPort: 443
             - containerPort: 8443
+            # - containerPort: 81 - used for the Dashboard mod
+          securityContext:
+            capabilities:
+              add: ["NET_ADMIN"]
           volumeMounts:
             - name: config
               mountPath: "/config"

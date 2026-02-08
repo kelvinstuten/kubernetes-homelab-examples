@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mailarchiver
+  name: mailarchiver
+  namespace: mailarchiver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mailarchiver
+  template:
+    metadata:
+      labels:
+        app: mailarchiver
+    spec:
+      volumes:
+        - name: mailarchiver-data
+          hostPath:
+            path: /mnt/data/mailarchiver/app/dataprotection-keys/
+            type: Directory
+        - name: postgres-data
+          hostPath:
+            path: /mnt/data/mailarchiver/database/
+            type: Directory
+      containers:
+        - image: s1t5/mailarchiver:latest
+          name: mailarchiver-app
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: mailarchiver-generic-configmap
+            - secretRef:
+                name: mailarchiver-generic-secrets
+          volumeMounts:
+            - name: mailarchiver-data
+              mountPath: /app/DataProtection-Keys
+          ports:
+            - containerPort: 5000
+          resources: {}
+        - image: postgres:17-alpine
+          name: mailarchiver-postgres
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: mailarchiver-generic-configmap
+            - secretRef:
+                name: mailarchiver-generic-secrets
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+          ports:
+            - containerPort: 5432
+          resources: {}

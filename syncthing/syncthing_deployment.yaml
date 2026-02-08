@@ -29,6 +29,9 @@ spec:
         - image: syncthing/syncthing:latest
           name: syncthing
           imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: syncthing-generic-configmap
           ports:
             - containerPort: 8384
             - containerPort: 22000

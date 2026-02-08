@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: technitium
+  name: technitium
+  namespace: technitium
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: technitium
+  template:
+    metadata:
+      labels:
+        app: technitium
+    spec:
+      hostname: technitium
+      volumes:
+        - name: config
+          hostPath:
+            path: /mnt/data/technitium/
+            type: DirectoryOrCreate
+      containers:
+        - name: technitium
+          image: technitium/dns-server:latest
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: technitium-generic-configmap
+            - secretRef:
+                name: technitium-generic-secrets
+          ports:
+            - containerPort: 5380
+            - containerPort: 53
+            - containerPort: 853
+            - containerPort: 8053
+          volumeMounts:
+            - name: config
+              mountPath: /etc/dns
+          resources: {}

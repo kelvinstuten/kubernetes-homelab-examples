@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gmailcleaner-generic-configmap
+  namespace: gmailcleaner
+data:
+  WEB_AUTH: "true"
+  AUTH_HOST: gmail.example.com

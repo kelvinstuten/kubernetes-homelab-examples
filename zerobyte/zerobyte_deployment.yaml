@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: zerobyte
+  name: zerobyte
+  namespace: zerobyte
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zerobyte
+  template:
+    metadata:
+      labels:
+        app: zerobyte
+    spec:
+      hostname: zerobyte
+      volumes:
+        - name: config
+          hostPath:
+            path: /mnt/data/zerobyte/
+            type: DirectoryOrCreate
+        - name: repositories
+          hostPath:
+            path: /mnt/datahdd/backups/server/zerobyte
+            type: DirectoryOrCreate
+        - name: backup-local-data
+          hostPath:
+            path: /mnt/data/
+      containers:
+        - name: zerobyte
+          image: ghcr.io/nicotsx/zerobyte:latest
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: zerobyte-generic-configmap
+            - secretRef:
+                name: zerobyte-generic-secrets
+          ports:
+            - containerPort: 4096
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: config
+              mountPath: /var/lib/zerobyte
+            - name: repositories
+              mountPath: /repositories
+            - name: backup-local-data
+              readOnly: true
+              mountPath: /mnt/data/
+          resources: {}

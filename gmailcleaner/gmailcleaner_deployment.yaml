@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: gmailcleaner
+  name: gmailcleaner
+  namespace: gmailcleaner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gmailcleaner
+  template:
+    metadata:
+      labels:
+        app: gmailcleaner
+    spec:
+      hostname: gmailcleaner
+      volumes:
+        - name: credentials
+          hostPath:
+            path: /mnt/data/gmailcleaner/credentials.json
+            type: File
+        # - name: token
+        #   hostPath:
+        #     path: /mnt/data/gmailcleaner/token.json
+        #     type: File
+      containers:
+        - name: gmailcleaner
+          image: ghcr.io/gururagavendra/gmail-cleaner:latest
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: gmailcleaner-generic-configmap
+          ports:
+            - containerPort: 8766
+            - containerPort: 8767
+          volumeMounts:
+            - name: credentials
+              mountPath: /app/credentials.json
+              readOnly: true
+            # - name: token
+            #   mountPath: /app/token.json
+          resources: {}

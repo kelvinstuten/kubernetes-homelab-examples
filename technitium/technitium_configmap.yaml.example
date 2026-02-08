@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: technitium-generic-configmap
+  namespace: technitium
+data:
+  DNS_SERVER_DOMAIN: example.com

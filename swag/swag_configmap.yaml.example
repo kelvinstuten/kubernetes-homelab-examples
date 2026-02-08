@@ -8,7 +8,9 @@ data:
   PUID: "1000"
   PGID: "1000"
   URL: {YOURDOMAIN.com}
+  EXTRA_DOMAINS: ""
   SUBDOMAINS: "wildcard"
   VALIDATION: "dns"
   DNSPLUGIN: "cloudflare"
   EMAIL: {YOUREMAIL@email.com}
+  #DOCKER_MODS: "linuxserver/mods:swag-dashboard"

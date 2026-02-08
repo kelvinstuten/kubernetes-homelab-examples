@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: karakeep
+  name: karakeep
+  namespace: karakeep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: karakeep
+  template:
+    metadata:
+      labels:
+        app: karakeep
+    spec:
+      hostname: karakeep
+      volumes:
+        - name: config
+          hostPath:
+            path: /mnt/data/karakeep/
+            type: DirectoryOrCreate
+        - name: repositories
+          hostPath:
+            path: /mnt/datahdd/backups/server/karakeep
+            type: DirectoryOrCreate
+        - name: backup-local-data
+          hostPath:
+            path: /mnt/data/
+      containers:
+        - name: karakeep
+          image: ghcr.io/nicotsx/karakeep:latest
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: karakeep-generic-configmap
+            - secretRef:
+                name: karakeep-generic-secrets
+          ports:
+            - containerPort: 3000
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: config
+              mountPath: /var/lib/karakeep
+            - name: repositories
+              mountPath: /repositories
+            - name: backup-local-data
+              readOnly: true
+              mountPath: /mnt/data/
+          resources: {}

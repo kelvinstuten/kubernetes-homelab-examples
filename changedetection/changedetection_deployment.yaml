@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: changedetection
+  name: changedetection
+  namespace: changedetection
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: changedetection
+  template:
+    metadata:
+      labels:
+        app: changedetection
+    spec:
+      volumes:
+        - name: changedetection-data
+          hostPath:
+            path: /mnt/data/changedetection/
+            type: Directory
+      containers:
+        - image: lscr.io/linuxserver/changedetection.io:latest
+          name: changedetection-app
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: changedetection-generic-configmap
+          volumeMounts:
+            - name: changedetection-data
+              mountPath: /config
+          ports:
+            - containerPort: 5000
+          resources: {}
