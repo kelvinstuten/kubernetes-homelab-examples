@@ -17,20 +17,17 @@ spec:
     spec:
       hostname: karakeep
       volumes:
-        - name: config
+        - name: karakeep-app
           hostPath:
-            path: /mnt/data/karakeep/
+            path: /mnt/data/karakeep/app
             type: DirectoryOrCreate
-        - name: repositories
+        - name: karakeep-meilisearch
           hostPath:
-            path: /mnt/datahdd/backups/server/karakeep
+            path: /mnt/data/karakeep/meilisearch
             type: DirectoryOrCreate
-        - name: backup-local-data
-          hostPath:
-            path: /mnt/data/
       containers:
-        - name: karakeep
-          image: ghcr.io/nicotsx/karakeep:latest
+        - name: karakeep-app
+          image: ghcr.io/karakeep-app/karakeep:latest
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
@@ -39,14 +36,39 @@ spec:
                 name: karakeep-generic-secrets
           ports:
             - containerPort: 3000
-          securityContext:
-            privileged: true
           volumeMounts:
-            - name: config
-              mountPath: /var/lib/karakeep
-            - name: repositories
-              mountPath: /repositories
-            - name: backup-local-data
-              readOnly: true
-              mountPath: /mnt/data/
+            - name: karakeep-app
+              mountPath: /data
+          resources: {}
+        - name: karakeep-chrome
+          image: gcr.io/zenika-hub/alpine-chrome:latest
+          imagePullPolicy: Always
+          args: 
+            - --no-sandbox
+            - --disable-gpu
+            - --disable-dev-shm-usage
+            - --remote-debugging-address=0.0.0.0
+            - --remote-debugging-port=9222
+            - --hide-scrollbars
+          envFrom:
+            - configMapRef:
+                name: karakeep-generic-configmap
+            - secretRef:
+                name: karakeep-generic-secrets
+          ports:
+            - containerPort: 9222
+          resources: {}
+        - name: karakeep-meilisearch
+          image: getmeili/meilisearch:latest
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: karakeep-generic-configmap
+            - secretRef:
+                name: karakeep-generic-secrets
+          ports:
+            - containerPort: 7700
+          volumeMounts:
+            - name: karakeep-meilisearch
+              mountPath: /meili_data
           resources: {}

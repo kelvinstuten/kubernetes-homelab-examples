@@ -4,4 +4,8 @@ metadata:
   name: karakeep-generic-configmap
   namespace: karakeep
 data:
-  EXAMPLE: EXAMPLE 
+  DATA_DIR: /data
+  MEILI_ADDR: http://localhost:7700
+  BROWSER_WEB_URL: http://localhost:9222
+  NEXTAUTH_URL: http://localhost:3000
+  MEILI_NO_ANALYTICS: "true"

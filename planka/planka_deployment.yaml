@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: planka
+  name: planka
+  namespace: planka
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: planka
+  template:
+    metadata:
+      labels:
+        app: planka
+    spec:
+      hostname: planka
+      volumes:
+        - name: planka-app
+          hostPath:
+            path: /mnt/data/planka/app
+            type: DirectoryOrCreate
+        - name: planka-postgres
+          hostPath:
+            path: /mnt/data/planka/database
+            type: DirectoryOrCreate
+      containers:
+        - name: planka-app
+          image: ghcr.io/plankanban/planka:latest
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: planka-generic-configmap
+            - secretRef:
+                name: planka-generic-secrets
+          ports:
+            - containerPort: 1337
+          volumeMounts:
+            - name: planka-app
+              mountPath: /app/data
+          resources: {}
+        - name: planka-postgres
+          image: postgres:16-alpine
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: planka-generic-configmap
+            - secretRef:
+                name: planka-generic-secrets
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: planka-postgres
+              mountPath: /var/lib/postgresql/data
+          resources: {}
