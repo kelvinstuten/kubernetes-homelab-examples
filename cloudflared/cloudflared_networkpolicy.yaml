@@ -7,7 +7,3 @@ metadata:
   namespace: cloudflared
 spec:
   podSelector: {}
-  policyTypes:
-    - Egress
-  egress: []
-

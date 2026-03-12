@@ -13,4 +13,5 @@ data:
   VALIDATION: "dns"
   DNSPLUGIN: "cloudflare"
   EMAIL: {YOUREMAIL@email.com}
+  #DOCKER_MODS: "linuxserver/mods:swag-cloudflare-real-ip"
   #DOCKER_MODS: "linuxserver/mods:swag-dashboard"
