@@ -28,6 +28,10 @@ spec:
           hostPath:
             path: /mnt/datahdd/backups/afbeeldingen
             type: Directory
+        - name: externalvideos
+          hostPath:
+            path: /mnt/datahdd/backups/videos
+            type: Directory
         - name: database
           hostPath:
             path: /mnt/data/immich/database/
@@ -53,6 +57,9 @@ spec:
               mountPath: "/usr/src/app/upload"
             - name: externalphotos
               mountPath: "/mnt/media/external/afbeeldingen"
+              readOnly: true
+            - name: externalvideos
+              mountPath: "/mnt/media/external/videos"
               readOnly: true
           ports:
             - containerPort: 3001
