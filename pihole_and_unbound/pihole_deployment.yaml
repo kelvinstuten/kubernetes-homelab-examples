@@ -49,11 +49,11 @@ spec:
               mountPath: /etc/dnsmasq.d
           livenessProbe:
             httpGet:
-              path: /admin
+              path: /admin/login
               port: 80
           readinessProbe:
             httpGet:
-              path: /admin
+              path: /admin/login
               port: 80
           resources: {}
         - name: unbound
