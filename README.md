@@ -40,7 +40,7 @@ The goal is to add charts for all of the applications listed below hosted in my 
 - [ ] restic
 - [ ] storj
 - [ ] grafana
-- [ ] mealie
+- [x] mealie
 - [ ] privatebin
 - [ ] rpimonitor
 - [ ] traggo

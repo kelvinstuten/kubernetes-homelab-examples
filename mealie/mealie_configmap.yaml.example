@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mealie-generic-configmap
+  namespace: mealie
+data:
+  ALLOW_SIGNUP: "false"
+  PUID: "1000"
+  PGID: "1000"
+  TZ: Europe/Amsterdam
+  BASE_URL: https://mealie.yourdomain.com
+  TOKEN_TIME: "48"
+  SQLITE_MIGRATE_JOURNAL_WAL: "true"
