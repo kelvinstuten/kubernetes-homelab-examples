@@ -16,9 +16,18 @@ The goal is to add charts for all of the applications listed below hosted in my 
 - [x] immich
 - [x] syncthing
 - [x] wallos
+- [x] zerobyte
+- [x] mealie
+- [x] technitium
+- [x] planka
+- [x] changedetection
+- [x] cloudflared
+- [x] mailarchiver
+- [x] openarchiver
+- [x] karakeep
+- [x] openweb
 - [ ] languagetool
 - [ ] libregrammar
-- [ ] planka
 - [ ] devops-agents
 - [ ] joplin
 - [ ] photoview
@@ -40,7 +49,6 @@ The goal is to add charts for all of the applications listed below hosted in my 
 - [ ] restic
 - [ ] storj
 - [ ] grafana
-- [x] mealie
 - [ ] privatebin
 - [ ] rpimonitor
 - [ ] traggo
