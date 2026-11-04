@@ -26,6 +26,7 @@ The goal is to add charts for all of the applications listed below hosted in my 
 - [x] openarchiver
 - [x] karakeep
 - [x] openweb
+- [x] homeassistant
 - [ ] languagetool
 - [ ] libregrammar
 - [ ] devops-agents
@@ -35,7 +36,6 @@ The goal is to add charts for all of the applications listed below hosted in my 
 - [ ] vscode
 - [ ] affine
 - [ ] fireflyiii
-- [x] homeassistant
 - [ ] librephotos
 - [ ] nextcloud
 - [ ] resiliosync
