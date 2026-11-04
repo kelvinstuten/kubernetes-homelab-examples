@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: homeassistant
+  name: homeassistant
+  namespace: homeassistant
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: homeassistant
+  template:
+    metadata:
+      labels:
+        app: homeassistant
+    spec:
+      hostname: homeassistant
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      terminationGracePeriodSeconds: 60
+      volumes:
+        - name: homeassistant-config
+          hostPath:
+            path: /mnt/data/homeassistant/config
+            type: DirectoryOrCreate
+        # - name: ttyusb
+        #   hostPath:
+        #     path: /dev/ttyUSB0
+        #     type: CharDevice
+        # - name: homeassistant-matter
+        #   hostPath:
+        #     path: /mnt/data/homeassistant/matter
+        #     type: DirectoryOrCreate
+      restartPolicy: Always
+      containers:
+        - name: homeassistant
+          image: ghcr.io/home-assistant/home-assistant:stable
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: homeassistant-generic-configmap
+          ports:
+            - containerPort: 8123
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: homeassistant-config
+              mountPath: /config
+            # - name: ttyusb
+            #   mountPath: /dev/ttyUSB0
+          resources: {}
+        # - name: matter-server
+        #   image: ghcr.io/home-assistant-libs/python-matter-server:stable
+        #   imagePullPolicy: Always
+        #   args:
+        #     - --storage-path
+        #     - /data
+        #     - --paa-root-cert-dir
+        #     - /data/credentials
+        #   ports:
+        #     - containerPort: 5580
+        #   volumeMounts:
+        #     - name: homeassistant-matter
+        #       mountPath: /data
+        #   resources: {}

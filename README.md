@@ -35,7 +35,7 @@ The goal is to add charts for all of the applications listed below hosted in my 
 - [ ] vscode
 - [ ] affine
 - [ ] fireflyiii
-- [ ] homeassistant
+- [x] homeassistant
 - [ ] librephotos
 - [ ] nextcloud
 - [ ] resiliosync

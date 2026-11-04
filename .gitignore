@@ -1,0 +1,6 @@
+_deprecated
+
+*_secret.yaml
+*_configmap.yaml
+
+.DS_Store

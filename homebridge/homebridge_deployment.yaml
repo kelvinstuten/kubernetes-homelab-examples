@@ -7,6 +7,8 @@ metadata:
   namespace: homebridge
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: homebridge
@@ -17,6 +19,7 @@ spec:
     spec:
       hostname: homebridge
       hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       volumes:
         - name: homebridge
           hostPath:
@@ -34,8 +37,6 @@ spec:
             - containerPort: 51846
             - containerPort: 5353
             - containerPort: 48000
-          securityContext:
-            privileged: true
           volumeMounts:
             - name: homebridge
               mountPath: "/homebridge"

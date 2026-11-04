@@ -21,6 +21,7 @@ spec:
         - name: ttyusb
           hostPath:
             path: /dev/ttyUSB0
+            type: CharDevice
         # - name: gpiomem
         #   hostPath:
         #     path: /dev/gpiomem

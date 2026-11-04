@@ -7,6 +7,8 @@ metadata:
   namespace: pihole
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: pihole
@@ -59,8 +61,6 @@ spec:
         - name: unbound
           image: klutchell/unbound:latest
           imagePullPolicy: Always
-          securityContext:
-            privileged: true
           ports:
             - containerPort: 5335
           volumeMounts:

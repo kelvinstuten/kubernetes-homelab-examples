@@ -7,6 +7,8 @@ metadata:
   namespace: zerobyte
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: zerobyte
@@ -40,7 +42,8 @@ spec:
           ports:
             - containerPort: 4096
           securityContext:
-            privileged: true
+            capabilities:
+              add: ["SYS_ADMIN"]
           volumeMounts:
             - name: config
               mountPath: /var/lib/zerobyte
